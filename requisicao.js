@@ -13,40 +13,77 @@ export async function executaRotina() {
     assertion: jwt,
   });
 
-  const resposta = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body,
-  });
+  let resposta;
+  try {
+    resposta = await fetch('https://oauth2.googleapis.com/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body,
+    });
+  } catch (err) {
+    console.error('❌ Erro de rede ao buscar token Google:', err);
+    throw err;
+  }
+
+  if (!resposta.ok) {
+    const erro = await resposta.text();
+    throw new Error(`❌ Token Google falhou (${resposta.status}): ${erro}`);
+  }
 
   const respostaToken = await resposta.json();
   const accessToken = respostaToken.access_token
 
   // ===== REQUEST REVIEWS =====
 
-  const response = await fetch('https://www.googleapis.com/androidpublisher/v3/applications/app.prit.business/reviews', {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${accessToken}`,
-      'Accept': 'application/json'
-    }
-  });
+  let response;
+  try {
+    response = await fetch(
+      'https://www.googleapis.com/androidpublisher/v3/applications/app.prit.business/reviews',
+      {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Accept': 'application/json'
+        }
+      }
+    );
+  } catch (err) {
+    console.error('❌ Erro de rede ao buscar reviews:', err);
+    throw err;
+  }
+
+  if (!response.ok) {
+    const erro = await response.text();
+    throw new Error(`❌ Reviews API falhou (${response.status}): ${erro}`);
+  }
+
   const dataJson = await response.json();
+
   
   // ===== ENVIA PARA N8N VIA WEBHOOK =====
   
   const productionURL = process.env.url_webhook_n8n
 
-  const envioWH = await fetch(productionURL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(dataJson)
-  });
+  let envioWH;
+  try {
+    envioWH = await fetch(productionURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dataJson)
+    });
+  } catch (err) {
+    console.error('❌ Erro de rede ao enviar webhook n8n:', err);
+    throw err;
+  }
 
+  if (!envioWH.ok) {
+    const erro = await envioWH.text();
+    throw new Error(`❌ Webhook n8n falhou (${envioWH.status}): ${erro}`);
+  }
   // ===== FINALIZA PROCESSO =====
 }
 executaRotina()
