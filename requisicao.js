@@ -1,5 +1,5 @@
+import 'dotenv/config';
 import criaJWT from './jtw.js'
-
 
 export async function executaRotina() {
 
@@ -33,7 +33,6 @@ export async function executaRotina() {
       'Accept': 'application/json'
     }
   });
-
   const dataJson = await response.json();
   
   // ===== ENVIA PARA N8N VIA WEBHOOK =====
@@ -50,3 +49,5 @@ export async function executaRotina() {
 
   // ===== FINALIZA PROCESSO =====
 }
+executaRotina()
+console.log('Código rodou até o final')
