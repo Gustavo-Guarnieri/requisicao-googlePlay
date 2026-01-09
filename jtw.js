@@ -9,7 +9,7 @@ export default function criaJWT(){
         .replace(/\//g, '_');
     }
 
-    const privateKey = process.env.google_private_key
+    const privateKey = process.env.google_private_key.replace(/\\n/g, '\n');
 
     const header = {
     "alg":"RS256",
