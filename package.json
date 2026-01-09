@@ -1,0 +1,11 @@
+{
+  "name": "requisicao-googleplay",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node test-file.js"
+  },
+  "dependencies": {
+    "cron": "^3.1.6"
+  }
+}
