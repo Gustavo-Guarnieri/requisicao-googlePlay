@@ -1,5 +1,7 @@
 import 'dotenv/config';
 import criaJWT from './jtw.js'
+import './envia-msg.js'
+import { enviaMsgN8n } from './envia-msg.js';
 
 export async function executaRotina() {
 
@@ -63,28 +65,9 @@ export async function executaRotina() {
 
   
   // ===== ENVIA PARA N8N VIA WEBHOOK =====
-  
-  const productionURL = process.env.url_webhook_n8n
+  enviaMsgN8n(dataJson)
 
-  let envioWH;
-  try {
-    envioWH = await fetch(productionURL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(dataJson)
-    });
-  } catch (err) {
-    console.error('❌ Erro de rede ao enviar webhook n8n:', err);
-    throw err;
-  }
 
-  if (!envioWH.ok) {
-    const erro = await envioWH.text();
-    throw new Error(`❌ Webhook n8n falhou (${envioWH.status}): ${erro}`);
-  }
-  // ===== FINALIZA PROCESSO =====
 }
 executaRotina()
 console.log('Código rodou até o final')
