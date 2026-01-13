@@ -12,7 +12,6 @@ export default async function enviaMsgN8n(dadosEnvio){
       },
       body: JSON.stringify(dadosEnvio)
     });
-    console.log('Enviou WB para n8n')
 
   } catch (err) {
     console.error('❌ Erro de rede ao enviar webhook n8n:', err);
@@ -23,4 +22,7 @@ export default async function enviaMsgN8n(dadosEnvio){
     const erro = await envioWH.text();
     throw new Error(`❌ Webhook n8n falhou (${envioWH.status}): ${erro}`);
   }
+
+  let status = 'OK'
+  if (envioWH.ok){return status}
 }

@@ -64,9 +64,8 @@ export async function executaRotina() {
 
   
   // ===== ENVIA PARA N8N VIA WEBHOOK =====
-  enviaMsgN8n(dataJson)
+  let status = await enviaMsgN8n(dataJson)
 
-  console.log('Código rodou até o final')
+  console.log(`${status} - envio do WB para n8n`)
+  if(status == 'OK'){ console.log('Código rodou até o final')}
 }
-
-
