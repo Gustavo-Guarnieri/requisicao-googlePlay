@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import criaJWT from './jtw.js'
-import './envia-msg.js'
-import { enviaMsgN8n } from './envia-msg.js';
+import enviaMsgN8n from './envia-msg.js';
 
 export async function executaRotina() {
 
@@ -67,7 +66,7 @@ export async function executaRotina() {
   // ===== ENVIA PARA N8N VIA WEBHOOK =====
   enviaMsgN8n(dataJson)
 
-
+  console.log('Código rodou até o final')
 }
-executaRotina()
-console.log('Código rodou até o final')
+
+

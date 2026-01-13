@@ -1,6 +1,6 @@
 // ===== ENVIA PARA N8N VIA WEBHOOK =====
 
-export async function enviaMsgN8n(dadosEnvio){
+export default async function enviaMsgN8n(dadosEnvio){
   const productionURL = process.env.url_webhook_n8n
 
   let envioWH;
@@ -12,6 +12,8 @@ export async function enviaMsgN8n(dadosEnvio){
       },
       body: JSON.stringify(dadosEnvio)
     });
+    console.log('Enviou WB para n8n')
+
   } catch (err) {
     console.error('❌ Erro de rede ao enviar webhook n8n:', err);
     throw err;
