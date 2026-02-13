@@ -25,11 +25,13 @@ export async function executaRotina() {
     });
   } catch (err) {
     console.error('❌ Erro de rede ao buscar token Google:', err);
+    console.log('❌ Erro de rede ao buscar token Google:', err);
     throw err;
   }
 
   if (!resposta.ok) {
     const erro = await resposta.text();
+    console.log(`❌ Token Google falhou (${resposta.status}): ${erro}`)
     throw new Error(`❌ Token Google falhou (${resposta.status}): ${erro}`);
   }
 
@@ -52,11 +54,13 @@ export async function executaRotina() {
     );
   } catch (err) {
     console.error('❌ Erro de rede ao buscar reviews:', err);
+    console.log('❌ Erro de rede ao buscar reviews:', err);
     throw err;
   }
 
   if (!response.ok) {
     const erro = await response.text();
+    console.log(`❌ Reviews API falhou (${response.status}): ${erro}`)
     throw new Error(`❌ Reviews API falhou (${response.status}): ${erro}`);
   }
 
