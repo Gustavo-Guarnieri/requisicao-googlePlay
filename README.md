@@ -1,4 +1,4 @@
-# ⭐ Automated Google Play Reviews Monitoring
+# 🤖 Automated Google Play Reviews Monitoring
 
 
 ## 🧠 Overview
