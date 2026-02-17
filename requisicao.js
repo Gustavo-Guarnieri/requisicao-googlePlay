@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import criaJWT from './jtw.js'
+import criaJWT from './jwt.js'
 import enviaMsgN8n from './envia-msg.js';
 
 export async function executaRotina() {
